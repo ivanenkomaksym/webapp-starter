@@ -12,7 +12,7 @@ function MainPage() {
         {topicsConfig.map((topic) => (
           <Link
             key={topic.id}
-            href={`/main/${topic.id}`}
+            href={`/${topic.id}`}
             className="rounded-xl border border-border bg-background p-8 flex flex-col items-center justify-center text-center transition-shadow hover:shadow-md focus:outline-none focus:ring-2 focus:ring-primary"
           >
             <span className="text-lg font-medium mb-2">{topic.label}</span>
