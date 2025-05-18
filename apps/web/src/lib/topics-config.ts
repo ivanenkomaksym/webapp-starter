@@ -16,6 +16,11 @@ export interface TopicConfig {
   label: string;
   description?: string;
   inputParams: TopicInputParam[];
+  /**
+   * Prompt template for this topic. Use {paramId} for input placeholders.
+   * You can edit these templates later.
+   */
+  promptTemplate: string;
 }
 
 export const topicsConfig: TopicConfig[] = [
@@ -27,6 +32,7 @@ export const topicsConfig: TopicConfig[] = [
       { id: 'topic', label: 'Topic', type: 'string' },
       { id: 'industry', label: 'Industry', type: 'string', optional: true },
     ],
+    promptTemplate: 'Write an email about {topic}{industry}.'
   },
   {
     id: 'market-research',
@@ -36,6 +42,7 @@ export const topicsConfig: TopicConfig[] = [
       { id: 'concept', label: 'Concept', type: 'string' },
       { id: 'audienceType', label: 'Audience Type', type: 'string', optional: true },
     ],
+    promptTemplate: 'Conduct market research on {concept} for the {audienceType} audience.'
   },
   {
     id: 'content-creation',
@@ -45,6 +52,7 @@ export const topicsConfig: TopicConfig[] = [
       { id: 'topic', label: 'Topic', type: 'string' },
       { id: 'audienceType', label: 'Audience Type', type: 'string', optional: true },
     ],
+    promptTemplate: 'Create content about {topic} for {audienceType}.'
   },
   {
     id: 'product-description',
@@ -54,6 +62,7 @@ export const topicsConfig: TopicConfig[] = [
       { id: 'productName', label: 'Product Name', type: 'string' },
       { id: 'features', label: 'Features', type: 'string', optional: true },
     ],
+    promptTemplate: 'Write a product description for {productName} highlighting {features}.'
   },
   {
     id: 'idea-generation',
@@ -63,6 +72,7 @@ export const topicsConfig: TopicConfig[] = [
       { id: 'goal', label: 'Goal', type: 'string' },
       { id: 'constraints', label: 'Constraints', type: 'string', optional: true },
     ],
+    promptTemplate: 'Generate ideas to achieve {goal} considering {constraints}.'
   },
   {
     id: 'education-learning',
@@ -72,5 +82,6 @@ export const topicsConfig: TopicConfig[] = [
       { id: 'subject', label: 'Subject', type: 'string' },
       { id: 'level', label: 'Level', type: 'string', optional: true },
     ],
+    promptTemplate: 'Create a learning plan for {subject} at {level} level.'
   },
-]; 
+];

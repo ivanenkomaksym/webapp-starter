@@ -13,6 +13,8 @@ export default function TopicPage({ params }: TopicPageProps) {
   const topic = topicsConfig.find((t) => t.id === params.topicId);
   const [form, setForm] = useState<Record<string, string | boolean>>({});
   const [output, setOutput] = useState<string>('');
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   if (!topic) return notFound();
 
@@ -20,9 +22,26 @@ export default function TopicPage({ params }: TopicPageProps) {
     setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   }
 
-  function handleGenerate(e: React.FormEvent) {
+  async function handleGenerate(e: React.FormEvent) {
+    if (!topic) return;
     e.preventDefault();
-    setOutput("Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.");
+    setLoading(true);
+    setError(null);
+    setOutput('');
+    try {
+      const res = await fetch('/api/generate', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ topicId: topic.id, params: form }),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || 'Unknown error');
+      setOutput(data.result);
+    } catch (err: any) {
+      setError(err.message || 'Failed to generate content');
+    } finally {
+      setLoading(false);
+    }
   }
 
   return (
@@ -58,11 +77,13 @@ export default function TopicPage({ params }: TopicPageProps) {
             )}
           </div>
         ))}
-        <button type="submit" className={styles.button}>Generate</button>
+        <button type="submit" className={styles.button} disabled={loading}>{loading ? 'Generating...' : 'Generate'}</button>
       </form>
       <div className={styles.output}>
         <h2 className={styles.outputHeading}>Heading</h2>
-        <div className={styles.outputContent}>{output || 'Generated Content'}</div>
+        <div className={styles.outputContent}>
+          {error ? <span style={{ color: 'red' }}>{error}</span> : (output || 'Generated Content')}
+        </div>
       </div>
     </main>
   );
