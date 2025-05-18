@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { useState } from 'react';
 import styles from './topic-page.module.css';
+import ReactMarkdown from 'react-markdown';
 
 interface TopicPageProps {
   params: { topicId: string };
@@ -79,12 +80,17 @@ export default function TopicPage({ params }: TopicPageProps) {
         ))}
         <button type="submit" className={styles.button} disabled={loading}>{loading ? 'Generating...' : 'Generate'}</button>
       </form>
-      <div className={styles.output}>
-        <h2 className={styles.outputHeading}>Heading</h2>
-        <div className={styles.outputContent}>
-          {error ? <span style={{ color: 'red' }}>{error}</span> : (output || 'Generated Content')}
+      {output && (
+        <div className={styles.output}>
+          <div className={styles.chatContainer}>
+            {/* Optionally, show user input as a bubble */}
+            {/* <div className={`${styles.chatBubble} ${styles.user}`}>{userInput}</div> */}
+            <div className={`${styles.chatBubble} ${styles.ai}`}>
+              <ReactMarkdown>{output}</ReactMarkdown>
+            </div>
+          </div>
         </div>
-      </div>
+      )}
     </main>
   );
 } 
