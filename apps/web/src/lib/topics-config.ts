@@ -4,6 +4,8 @@
 
 export type InputParamType = 'string' | 'int' | 'bool';
 
+const FormatAsMarkdown = 'Format the output using Markdown for headings, lists, bold, italics, etc.';
+
 export interface TopicInputParam {
   id: string;
   label: string;
@@ -32,17 +34,20 @@ export const topicsConfig: TopicConfig[] = [
       { id: 'topic', label: 'Topic', type: 'string' },
       { id: 'industry', label: 'Industry', type: 'string', optional: true },
     ],
-    promptTemplate: 'Write an email about {topic}{industry}.'
+    promptTemplate: `Create engaging, non-generic content on {topic}. Avoid robotic or formulaic responses; use a conventional,
+                     human-like tone, incorporate storytelling, examples, and unique insights. Make it feel fresh, original,
+                     and compelling for the target audience of {industry}.` + FormatAsMarkdown
   },
   {
     id: 'market-research',
     label: 'Market Research',
     description: 'Get insights and research for your market or audience.',
     inputParams: [
-      { id: 'concept', label: 'Concept', type: 'string' },
-      { id: 'audienceType', label: 'Audience Type', type: 'string', optional: true },
+      { id: 'product', label: 'Industry/Product', type: 'string' },
     ],
-    promptTemplate: 'Conduct market research on {concept} for the {audienceType} audience.'
+    promptTemplate: `Conduct market research on {product}. Identify trends, competitors,
+                     consumer behavior, and growth opportunities. Provide insights backed by data, key statistics, and
+                     strategic recommendations to leverage market gaps effectively.` + FormatAsMarkdown
   },
   {
     id: 'content-creation',
@@ -50,38 +55,45 @@ export const topicsConfig: TopicConfig[] = [
     description: 'Create engaging content for blogs, social media, and more.',
     inputParams: [
       { id: 'topic', label: 'Topic', type: 'string' },
-      { id: 'audienceType', label: 'Audience Type', type: 'string', optional: true },
+      { id: 'industry', label: 'Industry', type: 'string' },
     ],
-    promptTemplate: 'Create content about {topic} for {audienceType}.'
+    promptTemplate: `Create engaging, non-generic content on {topic}. Avoid robotic or formulaic responses; use a conventional,
+                     human-like tone, incorporate storytelling, examples, and unique insights. Make it feel fresh, original,
+                     and compelling for the target audience of {industry}.` + FormatAsMarkdown
   },
   {
     id: 'product-description',
     label: 'Product Description',
     description: 'Generate compelling product descriptions.',
     inputParams: [
-      { id: 'productName', label: 'Product Name', type: 'string' },
-      { id: 'features', label: 'Features', type: 'string', optional: true },
+      { id: 'product', label: 'Product', type: 'string' },
+      { id: 'brandLeader', label: 'Brand Leader', type: 'string' },
     ],
-    promptTemplate: 'Write a product description for {productName} highlighting {features}.'
+    promptTemplate: `Write a compelling product description for {product} in the style of {brandLeader}.
+                     Capture the essense, value, and emotional appeal while highlighting key features and benefits.
+                     Make it engaging, consise and aligned with the brand's unique voice.` + FormatAsMarkdown
   },
   {
     id: 'idea-generation',
     label: 'Idea Generation',
     description: 'Brainstorm new ideas for products, services, or content.',
     inputParams: [
-      { id: 'goal', label: 'Goal', type: 'string' },
-      { id: 'constraints', label: 'Constraints', type: 'string', optional: true },
+      { id: 'topic', label: 'Goal', type: 'string' },
     ],
-    promptTemplate: 'Generate ideas to achieve {goal} considering {constraints}.'
+    promptTemplate: `Generate creative, out-of-the-box ideas for {topic}. Provide unique, practical, and innovative
+                     solutions that haven't been overused. Use diverse brainstorming techniques like SCAMPER, mind mapping,
+                     and lateral thinking to enhance creativity.` + FormatAsMarkdown
   },
   {
     id: 'education-learning',
     label: 'Education & Learning',
     description: 'Get educational content or learning plans.',
     inputParams: [
-      { id: 'subject', label: 'Subject', type: 'string' },
-      { id: 'level', label: 'Level', type: 'string', optional: true },
+      { id: 'concept', label: 'Concept', type: 'string' },
+      { id: 'audience', label: 'Audience', type: 'string' },
     ],
-    promptTemplate: 'Create a learning plan for {subject} at {level} level.'
+    promptTemplate: `Explain {concept} in simple terms for a {audience}. Use analogies, step-by-step explanations,
+                     and interactive questioning to reinforce learning. Break complex ideas into digestible parts,
+                     and include practical examples, and clear language to make it easy to understand.` + FormatAsMarkdown
   },
 ];
