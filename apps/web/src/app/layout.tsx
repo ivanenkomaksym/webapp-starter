@@ -5,7 +5,7 @@ import { VercelAnalytics } from "@/lib/analytics/vercel";
 import { geistMono, geistSans } from "@/lib/fonts";
 import { cn } from "@/lib/utils";
 import { Providers } from "@/providers/providers";
-import { ClerkProvider } from "@clerk/nextjs";
+import { ClerkProvider, SignedIn, SignedOut, SignInButton, SignUpButton, UserButton } from "@clerk/nextjs";
 
 import "./globals.css";
 
@@ -30,7 +30,6 @@ export default function RootLayout({ children }: RootLayoutProps) {
     <ClerkProvider>
       <html suppressHydrationWarning lang="en">
         <head>{/* <GoogleAnalytics gaId="G-2L23D2FV55" /> */}</head>
-
         <body
           className={cn(
             "min-h-screen bg-background font-sans antialiased",
@@ -38,6 +37,15 @@ export default function RootLayout({ children }: RootLayoutProps) {
             geistSans.variable,
           )}
         >
+          <header className="flex justify-end items-center p-4 gap-4 h-16">
+            <SignedOut>
+              <SignInButton />
+              <SignUpButton />
+            </SignedOut>
+            <SignedIn>
+              <UserButton />
+            </SignedIn>
+          </header>
           <Providers attribute="class" defaultTheme="system" enableSystem>
             {children}
             <TailwindIndicator />
